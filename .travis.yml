@@ -25,7 +25,7 @@ deploy:
   provider: elasticbeanstalk
   region: "ap-south-1"
   app: "multi-docker"
-  env: " MultiDocker-env"
+  env: "MultiDocker-env"
   bucket_name: "elasticbeanstalk-ap-south-1-030511875005"
   # the folder inside the bucket we want to push zip file to. Essentially,
   # keep it the same as `app`.
