@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t client -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true client npm run test -- --coverage
+
+after_success:
+  - docker build -t anubhav2701/multi-fib-client ./client
+  - docker build -t anubhav2701/multi-fib-server ./server
+  - docker build -t anubhav2701/multi-fib-nginx ./nginx
+  - docker build -t anubhav2701/multi-fib-worker ./worker
+  # login to docker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push to docker hub
+  - docker push anubhav2701/multi-fib-client
+  - docker push anubhav2701/multi-fib-server
+  - docker push anubhav2701/multi-fib-worker
+  - docker push anubhav2701/multi-fib-nginx
+
+
